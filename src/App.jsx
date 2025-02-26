@@ -9,11 +9,15 @@ import { useStore } from './lib/zustand'
 function App() {
 	const session = useStore(state => state.session)
 
-	if (!session) {
+	if (session) {
 		return (
 			<Routes>
+				<Route element={<MainLayout />}>
+					<Route index element={<Home />} />
+				</Route>
+
 				<Route element={<AdminLayout />}>
-					<Route path='*' element={<SignIn />} />
+					<Route path='/admin/*' element={<AdminApp />} />
 				</Route>
 			</Routes>
 		)
@@ -21,12 +25,8 @@ function App() {
 
 	return (
 		<Routes>
-			<Route element={<MainLayout />}>
-				<Route index element={<Home />} />
-			</Route>
-
 			<Route element={<AdminLayout />}>
-				<Route path='/admin/*' element={<AdminApp />} />
+				<Route path='*' element={<SignIn />} />
 			</Route>
 		</Routes>
 	)

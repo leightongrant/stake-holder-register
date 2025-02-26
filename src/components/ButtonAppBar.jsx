@@ -1,21 +1,43 @@
 import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
 import { useStore } from '../lib/zustand'
-// import IconButton from '@mui/material/IconButton'
-// import MenuIcon from '@mui/icons-material/Menu'
 
-// import Theme from './Theme'
+import {
+	Divider,
+	ListItemIcon,
+	MenuItem,
+	Avatar,
+	Menu,
+	Box,
+	Toolbar,
+	Typography,
+	IconButton,
+} from '@mui/material'
+import { Logout } from '@mui/icons-material'
+import { StorageSharp } from '@mui/icons-material'
+import { useState } from 'react'
+import Theme from './Theme'
 import { account } from '../lib/appwrite'
 
 export default function ButtonAppBar() {
-	const { user, setUser } = useStore()
+	const { user, setUser, setSession } = useStore()
+	const [anchorEl, setAnchorEl] = useState(null)
+	const open = anchorEl
+	const handleClick = event => {
+		setAnchorEl(event.currentTarget)
+	}
+	const handleClose = () => {
+		setAnchorEl(null)
+	}
+
 	const handleLogout = () => {
-		account.deleteSessions()
-		localStorage.removeItem('appwrite_user')
-		setUser(null)
+		const session = account.deleteSessions()
+		session
+			.then(() => {
+				setUser(null)
+				setSession(null)
+				localStorage.removeItem('appwrite_user')
+			})
+			.catch(err => console.log(err))
 	}
 	return (
 		<Box sx={{ flexGrow: 1 }} component={'header'}>
@@ -31,21 +53,72 @@ export default function ButtonAppBar() {
 					</Typography>
 
 					{/* <Theme /> */}
-					<Button color='inherit' onClick={handleLogout}>
-						Logout
-					</Button>
-					<Typography color='inherit' variant='h6' component='div'>
-						{user?.name}
-					</Typography>
-					{/* <IconButton
-						size='large'
-						edge='start'
-						color='inherit'
-						aria-label='menu'
-						sx={{ mr: 2 }}
+
+					<IconButton
+						onClick={handleClick}
+						size='small'
+						sx={{ ml: 2 }}
+						aria-controls={open ? 'account-menu' : undefined}
+						aria-haspopup='true'
+						aria-expanded={open ? 'true' : undefined}
 					>
-						<MenuIcon />
-					</IconButton> */}
+						<Avatar alt={user?.name} />
+					</IconButton>
+
+					<Menu
+						anchorEl={anchorEl}
+						id='account-menu'
+						open={open}
+						onClose={handleClose}
+						onClick={handleClose}
+						slotProps={{
+							paper: {
+								elevation: 0,
+								sx: {
+									overflow: 'visible',
+									filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+									mt: 1.5,
+									'& .MuiAvatar-root': {
+										width: 32,
+										height: 32,
+										ml: -0.5,
+										mr: 1,
+									},
+									'&::before': {
+										content: '""',
+										display: 'block',
+										position: 'absolute',
+										top: 0,
+										right: 14,
+										width: 10,
+										height: 10,
+										bgcolor: 'background.paper',
+										transform: 'translateY(-50%) rotate(45deg)',
+										zIndex: 0,
+									},
+								},
+							},
+						}}
+						transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+						anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+					>
+						<MenuItem onClick={handleClose}>
+							<ListItemIcon>
+								<StorageSharp fontSize='small' />
+							</ListItemIcon>
+							Admin
+						</MenuItem>
+						<MenuItem onClick={handleLogout}>
+							<ListItemIcon>
+								<Logout fontSize='small' />
+							</ListItemIcon>
+							Logout
+						</MenuItem>
+						<Divider />
+						<MenuItem>
+							<Theme />
+						</MenuItem>
+					</Menu>
 				</Toolbar>
 			</AppBar>
 		</Box>
