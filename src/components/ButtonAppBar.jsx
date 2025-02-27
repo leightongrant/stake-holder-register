@@ -19,7 +19,7 @@ import Theme from './Theme'
 import { account } from '../lib/appwrite'
 
 export default function ButtonAppBar() {
-	const { user, setUser, setSession } = useStore()
+	const { user, setUser, setSession, setSessionId } = useStore()
 	const [anchorEl, setAnchorEl] = useState(null)
 	const open = anchorEl
 	const handleClick = event => {
@@ -35,6 +35,7 @@ export default function ButtonAppBar() {
 			.then(() => {
 				setUser(null)
 				setSession(null)
+				setSessionId(null)
 				localStorage.removeItem('appwrite_user')
 			})
 			.catch(err => console.log(err))
@@ -51,9 +52,6 @@ export default function ButtonAppBar() {
 					>
 						Home
 					</Typography>
-
-					{/* <Theme /> */}
-
 					<IconButton
 						onClick={handleClick}
 						size='small'
@@ -124,4 +122,3 @@ export default function ButtonAppBar() {
 		</Box>
 	)
 }
-//hsl(8.51,77.9%,64.51%)
