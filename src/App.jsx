@@ -7,9 +7,9 @@ import SignIn from './components/login/SignIn'
 import { useStore } from './lib/zustand'
 
 function App() {
-	const session = useStore(state => state.session)
+	const { sessionId } = useStore()
 
-	if (session) {
+	if (sessionId) {
 		return (
 			<Routes>
 				<Route element={<MainLayout />}>
