@@ -69,7 +69,7 @@ export default function SignIn(props) {
 	const [passwordError, setPasswordError] = React.useState(false)
 	const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('')
 	const [open, setOpen] = React.useState(false)
-	const { setUser, setSession } = useStore()
+	const { setUser, setSession, setSessionId } = useStore()
 
 	const handleClickOpen = () => {
 		setOpen(true)
@@ -94,6 +94,7 @@ export default function SignIn(props) {
 		session
 			.then(currentSession => {
 				setSession(currentSession)
+				setSessionId(currentSession.$id)
 				const user = account.get()
 				user.then(currentUser => {
 					localStorage.setItem('appwrite_user', JSON.stringify(currentUser))
