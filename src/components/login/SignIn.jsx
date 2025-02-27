@@ -93,6 +93,9 @@ export default function SignIn(props) {
 
 		session
 			.then(currentSession => {
+				setSession(
+					localStorage.setItem('session', JSON.stringify(currentSession))
+				)
 				setSession(currentSession)
 				setSessionId(currentSession.$id)
 				const user = account.get()

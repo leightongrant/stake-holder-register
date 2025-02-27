@@ -37,6 +37,7 @@ export default function ButtonAppBar() {
 				setSession(null)
 				setSessionId(null)
 				localStorage.removeItem('appwrite_user')
+				localStorage.removeItem('session')
 			})
 			.catch(err => console.log(err))
 	}
