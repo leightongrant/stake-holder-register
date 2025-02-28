@@ -1,25 +1,16 @@
-import {
-	DateField,
-	EmailField,
-	Show,
-	SimpleShowLayout,
-	TextField,
-} from 'react-admin'
+import { EmailField, Show, SimpleShowLayout, TextField } from 'react-admin'
 
 export const StakeholderShow = () => (
 	<Show>
 		<SimpleShowLayout>
-			<TextField source='id' />
-			<TextField source='stakeholderName' />
+			<TextField source='firstname' />
+			<TextField source='lastname' />
 			<TextField source='category' />
-			<TextField source='stakeholderAnalysisGroup' />
+			<TextField source='stakeholder_group' />
 			<TextField source='organisation' />
-			<TextField source='role' />
+			<TextField source='job_title' />
 			<TextField source='phone' />
 			<EmailField source='email' />
-			<TextField source='address' />
-			<DateField source='$createdAt' />
-			<DateField source='$updatedAt' />
 		</SimpleShowLayout>
 	</Show>
 )
