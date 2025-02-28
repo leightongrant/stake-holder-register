@@ -1,15 +1,12 @@
 import { Admin, Resource } from 'react-admin'
-import {
-	appWriteDataProvider,
-	// appWriteAuthProvider,
-	// LoginForm,
-} from 'ra-appwrite'
+import { appWriteDataProvider } from 'ra-appwrite'
 
 import { client } from '../lib/appwrite'
 import { DATABASE_ID, COLLECTION_ID } from '../lib/appwrite'
 import { StakeholderList } from './StakeholderList'
 import { StakeholderShow } from './StakeholderShow'
 import { StakeholderEdit } from './StakeholderEdit'
+import { StakeholderCreate } from './StakeholderCreate'
 
 const dataProvider = new appWriteDataProvider({
 	client,
@@ -19,40 +16,15 @@ const dataProvider = new appWriteDataProvider({
 	},
 })
 
-// class custAppWriteAuthProvider extends appWriteAuthProvider {
-// 	logout() {
-// 		super.logout()
-// 		localStorage.removeItem('cookieFallback')
-// 	}
-// }
-
-// const authProvider = new custAppWriteAuthProvider({
-// 	client,
-// 	account,
-// })
-
-// const SignIn = () => {
-// 	return (
-// 		<Login>
-// 			<LoginForm />
-// 		</Login>
-// 	)
-// }
-
 const AdminApp = () => {
 	return (
-		<Admin
-			dataProvider={dataProvider}
-			// authProvider={authProvider}
-			basename='/admin'
-
-			// loginPage={<SignIn />}
-		>
+		<Admin dataProvider={dataProvider} basename='/admin'>
 			<Resource
 				name='stakeholders'
 				list={StakeholderList}
 				edit={StakeholderEdit}
 				show={StakeholderShow}
+				create={StakeholderCreate}
 			/>
 		</Admin>
 	)
