@@ -51,7 +51,7 @@ export default function ButtonAppBar() {
 						component='div'
 						sx={{ flexGrow: 1 }}
 					>
-						Home
+						Longleigh Foundation
 					</Typography>
 					<IconButton
 						onClick={handleClick}
