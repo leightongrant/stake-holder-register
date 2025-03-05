@@ -1,6 +1,6 @@
 import AppBar from '@mui/material/AppBar'
 import { useStore } from '../lib/zustand'
-
+import { useNavigate } from 'react-router'
 import {
 	Divider,
 	ListItemIcon,
@@ -21,12 +21,16 @@ import { account } from '../lib/appwrite'
 export default function ButtonAppBar() {
 	const { user, setUser, setSession, setSessionId } = useStore()
 	const [anchorEl, setAnchorEl] = useState(null)
+	const navigate = useNavigate()
 	const open = anchorEl
 	const handleClick = event => {
 		setAnchorEl(event.currentTarget)
 	}
 	const handleClose = () => {
 		setAnchorEl(null)
+	}
+	const handleNavigate = () => {
+		navigate('/admin')
 	}
 
 	const handleLogout = () => {
@@ -41,6 +45,7 @@ export default function ButtonAppBar() {
 			})
 			.catch(err => console.log(err))
 	}
+
 	return (
 		<Box sx={{ flexGrow: 1 }} component={'header'}>
 			<AppBar position='static'>
@@ -101,12 +106,14 @@ export default function ButtonAppBar() {
 						transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 						anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
 					>
-						<MenuItem onClick={handleClose}>
-							<ListItemIcon>
-								<StorageSharp fontSize='small' />
-							</ListItemIcon>
-							Admin
-						</MenuItem>
+						{user?.labels.includes('admin') && (
+							<MenuItem onClick={handleNavigate}>
+								<ListItemIcon>
+									<StorageSharp fontSize='small' />
+								</ListItemIcon>
+								Admin
+							</MenuItem>
+						)}
 						<MenuItem onClick={handleLogout}>
 							<ListItemIcon>
 								<Logout fontSize='small' />
