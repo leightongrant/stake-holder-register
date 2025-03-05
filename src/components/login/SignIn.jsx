@@ -19,7 +19,7 @@ import ColorModeSelect from '../ColorModeSelect'
 // import { GoogleIcon, FacebookIcon, SitemarkIcon } from '../CustomIcons'
 import { account } from '../../lib/appwrite'
 import { useStore } from '../../lib/zustand'
-// import { useNavigate } from 'react-router'
+import logo from '../../assets/longleigh-logo.svg'
 
 const Card = styled(MuiCard)(({ theme }) => ({
 	display: 'flex',
@@ -142,6 +142,12 @@ export default function SignIn(props) {
 		<AppTheme {...props}>
 			<CssBaseline enableColorScheme />
 			<SignInContainer direction='column' justifyContent='space-between'>
+				<Box
+					component={'div'}
+					sx={{ position: 'fixed', top: '1rem', left: '1rem' }}
+				>
+					<Box component='img' src={logo} width={150} height={100} />
+				</Box>
 				<ColorModeSelect
 					sx={{ position: 'fixed', top: '1rem', right: '1rem' }}
 				/>
