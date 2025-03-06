@@ -4,7 +4,6 @@ import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import CssBaseline from '@mui/material/CssBaseline'
 import FormControlLabel from '@mui/material/FormControlLabel'
-// import Divider from '@mui/material/Divider'
 import FormLabel from '@mui/material/FormLabel'
 import FormControl from '@mui/material/FormControl'
 import Link from '@mui/material/Link'
@@ -16,10 +15,11 @@ import { styled } from '@mui/material/styles'
 import ForgotPassword from '../ForgotPassword'
 import AppTheme from '../AppTheme'
 import ColorModeSelect from '../ColorModeSelect'
-// import { GoogleIcon, FacebookIcon, SitemarkIcon } from '../CustomIcons'
 import { account } from '../../lib/appwrite'
 import { useStore } from '../../lib/zustand'
 import logo from '../../assets/longleigh-logo.svg'
+import ErrorAlert from '../alerts/ErrorAlert'
+import { useAlertStore } from '../../lib/zustand'
 
 const Card = styled(MuiCard)(({ theme }) => ({
 	display: 'flex',
@@ -70,6 +70,7 @@ export default function SignIn(props) {
 	const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('')
 	const [open, setOpen] = React.useState(false)
 	const { setUser, setSession, setSessionId } = useStore()
+	const { showAlert } = useAlertStore()
 
 	const handleClickOpen = () => {
 		setOpen(true)
@@ -106,8 +107,8 @@ export default function SignIn(props) {
 				return Promise.resolve()
 			})
 			.catch(err => {
-				console.log(err)
-				return Promise.reject(err)
+				console.log('Error:', err.message)
+				showAlert(err.message, 'error')
 			})
 	}
 
@@ -126,7 +127,7 @@ export default function SignIn(props) {
 			setEmailErrorMessage('')
 		}
 
-		if (!password.value || password.value.length < 6) {
+		if (!password.value || password.value.length < 8) {
 			setPasswordError(true)
 			setPasswordErrorMessage('Password must be at least 6 characters long.')
 			isValid = false
@@ -152,7 +153,6 @@ export default function SignIn(props) {
 					sx={{ position: 'fixed', top: '1rem', right: '1rem' }}
 				/>
 				<Card variant='outlined'>
-					{/* <SitemarkIcon /> */}
 					<Typography
 						component='h1'
 						variant='h4'
@@ -227,36 +227,8 @@ export default function SignIn(props) {
 						>
 							Forgot your password?
 						</Link>
+						<ErrorAlert />
 					</Box>
-					{/* <Divider>or</Divider>
-					<Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-						<Button
-							fullWidth
-							variant='outlined'
-							onClick={() => alert('Sign in with Google')}
-							startIcon={<GoogleIcon />}
-						>
-							Sign in with Google
-						</Button>
-						<Button
-							fullWidth
-							variant='outlined'
-							onClick={() => alert('Sign in with Facebook')}
-							startIcon={<FacebookIcon />}
-						>
-							Sign in with Facebook
-						</Button>
-						<Typography sx={{ textAlign: 'center' }}>
-							Don&apos;t have an account?{' '}
-							<Link
-								href='/material-ui/getting-started/templates/sign-in/'
-								variant='body2'
-								sx={{ alignSelf: 'center' }}
-							>
-								Sign up
-							</Link>
-						</Typography>
-					</Box> */}
 				</Card>
 			</SignInContainer>
 		</AppTheme>
