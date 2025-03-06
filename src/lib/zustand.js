@@ -16,3 +16,12 @@ export const useStore = create(set => ({
 	setSession: current => set({ session: current }),
 	setSessionId: current => set({ sessionId: current }),
 }))
+
+export const useAlertStore = create(set => ({
+	open: false,
+	message: '',
+	severity: 'error',
+	showAlert: (message, severity = 'error') =>
+		set({ open: true, message, severity }),
+	closeAlert: () => set({ open: false }),
+}))
