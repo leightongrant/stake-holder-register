@@ -2,7 +2,6 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
-import CssBaseline from '@mui/material/CssBaseline'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormLabel from '@mui/material/FormLabel'
 import FormControl from '@mui/material/FormControl'
@@ -12,14 +11,13 @@ import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import MuiCard from '@mui/material/Card'
 import { styled } from '@mui/material/styles'
-import ForgotPassword from '../ForgotPassword'
-import AppTheme from '../AppTheme'
 import ColorModeSelect from '../ColorModeSelect'
 import { account } from '../../lib/appwrite'
 import { useStore } from '../../lib/zustand'
 import logo from '../../assets/longleigh-logo.svg'
 import ErrorAlert from '../alerts/ErrorAlert'
 import { useAlertStore } from '../../lib/zustand'
+import { useNavigate } from 'react-router-dom'
 
 const Card = styled(MuiCard)(({ theme }) => ({
 	display: 'flex',
@@ -63,22 +61,14 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 	},
 }))
 
-export default function SignIn(props) {
+export default function SignIn() {
 	const [emailError, setEmailError] = React.useState(false)
 	const [emailErrorMessage, setEmailErrorMessage] = React.useState('')
 	const [passwordError, setPasswordError] = React.useState(false)
 	const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('')
-	const [open, setOpen] = React.useState(false)
 	const { setUser, setSession, setSessionId } = useStore()
 	const { showAlert } = useAlertStore()
-
-	const handleClickOpen = () => {
-		setOpen(true)
-	}
-
-	const handleClose = () => {
-		setOpen(false)
-	}
+	const navigate = useNavigate()
 
 	const handleSubmit = event => {
 		if (emailError || passwordError) {
@@ -140,97 +130,93 @@ export default function SignIn(props) {
 	}
 
 	return (
-		<AppTheme {...props}>
-			<CssBaseline enableColorScheme />
-			<SignInContainer direction='column' justifyContent='space-between'>
-				<Box
-					component={'div'}
-					sx={{ position: 'fixed', top: '1rem', left: '1rem' }}
+		<SignInContainer direction='column' justifyContent='space-between'>
+			<Box
+				component={'div'}
+				sx={{ position: 'fixed', top: '1rem', left: '1rem' }}
+			>
+				<Box component='img' src={logo} width={150} height={100} />
+			</Box>
+			<ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
+			<Card variant='outlined'>
+				<ErrorAlert />
+				<Typography
+					component='h1'
+					variant='h4'
+					sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
 				>
-					<Box component='img' src={logo} width={150} height={100} />
-				</Box>
-				<ColorModeSelect
-					sx={{ position: 'fixed', top: '1rem', right: '1rem' }}
-				/>
-				<Card variant='outlined'>
-					<Typography
-						component='h1'
-						variant='h4'
-						sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
+					Sign in
+				</Typography>
+
+				<Box
+					component='form'
+					onSubmit={handleSubmit}
+					noValidate
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						width: '100%',
+						gap: 2,
+					}}
+				>
+					<FormControl>
+						<FormLabel htmlFor='email'>Email</FormLabel>
+						<TextField
+							error={emailError}
+							helperText={emailErrorMessage}
+							id='email'
+							type='email'
+							name='email'
+							placeholder='your@email.com'
+							autoComplete='email'
+							autoFocus
+							required
+							fullWidth
+							variant='outlined'
+							color={emailError ? 'error' : 'primary'}
+						/>
+					</FormControl>
+					<FormControl>
+						<FormLabel htmlFor='password'>Password</FormLabel>
+						<TextField
+							error={passwordError}
+							helperText={passwordErrorMessage}
+							name='password'
+							placeholder='••••••'
+							type='password'
+							id='password'
+							autoComplete='current-password'
+							autoFocus
+							required
+							fullWidth
+							variant='outlined'
+							color={passwordError ? 'error' : 'primary'}
+						/>
+					</FormControl>
+					<FormControlLabel
+						control={<Checkbox value='remember' color='primary' />}
+						label='Remember me'
+					/>
+
+					<Button
+						type='submit'
+						fullWidth
+						variant='contained'
+						onClick={validateInputs}
 					>
 						Sign in
-					</Typography>
-					<Box
-						component='form'
-						onSubmit={handleSubmit}
-						noValidate
-						sx={{
-							display: 'flex',
-							flexDirection: 'column',
-							width: '100%',
-							gap: 2,
-						}}
-					>
-						<FormControl>
-							<FormLabel htmlFor='email'>Email</FormLabel>
-							<TextField
-								error={emailError}
-								helperText={emailErrorMessage}
-								id='email'
-								type='email'
-								name='email'
-								placeholder='your@email.com'
-								autoComplete='email'
-								autoFocus
-								required
-								fullWidth
-								variant='outlined'
-								color={emailError ? 'error' : 'primary'}
-							/>
-						</FormControl>
-						<FormControl>
-							<FormLabel htmlFor='password'>Password</FormLabel>
-							<TextField
-								error={passwordError}
-								helperText={passwordErrorMessage}
-								name='password'
-								placeholder='••••••'
-								type='password'
-								id='password'
-								autoComplete='current-password'
-								autoFocus
-								required
-								fullWidth
-								variant='outlined'
-								color={passwordError ? 'error' : 'primary'}
-							/>
-						</FormControl>
-						<FormControlLabel
-							control={<Checkbox value='remember' color='primary' />}
-							label='Remember me'
-						/>
-						<ForgotPassword open={open} handleClose={handleClose} />
-						<Button
-							type='submit'
-							fullWidth
-							variant='contained'
-							onClick={validateInputs}
-						>
-							Sign in
-						</Button>
-						<Link
-							component='button'
-							type='button'
-							onClick={handleClickOpen}
-							variant='body2'
-							sx={{ alignSelf: 'center' }}
-						>
-							Forgot your password?
-						</Link>
-						<ErrorAlert />
-					</Box>
-				</Card>
-			</SignInContainer>
-		</AppTheme>
+					</Button>
+				</Box>
+				<Link
+					component='button'
+					type='button'
+					onClick={() => navigate('/forgot')}
+					variant='body2'
+					sx={{ alignSelf: 'center' }}
+				>
+					Forgot your password?
+				</Link>
+			</Card>
+		</SignInContainer>
 	)
 }
