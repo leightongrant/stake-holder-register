@@ -7,6 +7,7 @@ import SignIn from './components/login/SignIn'
 import { useStore } from './lib/zustand'
 import Forbidden from './components/pages/Forbidden'
 import PasswordRecovery from './components/pages/PasswordRecovery'
+import Forgot from './components/pages/Forgot'
 
 function App() {
 	const { sessionId, user } = useStore()
@@ -35,6 +36,7 @@ function App() {
 			<Route element={<AdminLayout />}>
 				<Route path='*' element={<SignIn />} />
 				<Route path='/recovery' element={<PasswordRecovery />} />
+				<Route path='/forgot' element={<Forgot />} />
 			</Route>
 		</Routes>
 	)
