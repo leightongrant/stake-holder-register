@@ -1,26 +1,25 @@
 import Alert from '@mui/material/Alert'
-import Stack from '@mui/material/Stack'
 import { useEffect } from 'react'
 import { useAlertStore } from '../../lib/zustand'
 
 export default function ErrorAlert() {
-	const { open, message, severity, closeAlert } = useAlertStore()
+	const { openAlert, message, severity, closeAlert } = useAlertStore()
 
 	useEffect(() => {
-		if (open) {
+		if (openAlert) {
 			setTimeout(() => {
 				closeAlert()
 			}, 5000)
 		}
-	}, [open, closeAlert])
+	}, [openAlert, closeAlert])
 
 	return (
-		<Stack sx={{ width: '100%' }} spacing={2}>
-			{open && (
-				<Alert variant='filled' severity={severity}>
+		<>
+			{openAlert && (
+				<Alert variant='filled' severity={severity} sx={{ margin: '1em' }}>
 					{message}
 				</Alert>
 			)}
-		</Stack>
+		</>
 	)
 }
