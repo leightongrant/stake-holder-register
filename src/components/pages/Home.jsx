@@ -18,7 +18,7 @@ import {
 } from '@mui/icons-material'
 
 const columns = [
-	{ field: 'id', headerName: 'ID', width: 70 },
+	{ field: 'id', headerName: 'ID', width: 10 },
 	{
 		field: 'name',
 		headerName: 'Name',
@@ -92,7 +92,7 @@ const columns = [
 		field: 'email',
 		headerName: 'Email Address',
 		type: 'email',
-		width: 250,
+		width: 300,
 		renderCell: params => (
 			<Link
 				href={'mailto:' + params.value}
