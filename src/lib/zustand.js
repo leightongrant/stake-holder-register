@@ -18,10 +18,9 @@ export const useStore = create(set => ({
 }))
 
 export const useAlertStore = create(set => ({
-	open: false,
+	openAlert: false,
 	message: '',
-	severity: 'error',
-	showAlert: (message, severity = 'error') =>
-		set({ open: true, message, severity }),
-	closeAlert: () => set({ open: false }),
+	severity: '',
+	showAlert: (message, severity) => set({ openAlert: true, message, severity }),
+	closeAlert: () => set({ openAlert: false }),
 }))
