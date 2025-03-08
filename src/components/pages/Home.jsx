@@ -138,7 +138,7 @@ const Home = () => {
 
 	if (rows.length === 0) {
 		return (
-			<Container maxWidth={'xl'} sx={{ height: '100vh' }}>
+			<Container maxWidth={'xl'}>
 				<Typography variant='h1' py={5}>
 					Stakeholder Register
 				</Typography>
@@ -148,7 +148,7 @@ const Home = () => {
 	}
 
 	return (
-		<Container maxWidth='xl' sx={{ height: '100vh' }}>
+		<Container maxWidth='xl'>
 			<Typography variant='h1' py={5}>
 				Stakeholder Register
 			</Typography>
