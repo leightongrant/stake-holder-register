@@ -23,7 +23,7 @@ createRoot(document.getElementById('root')).render(
 	<StrictMode>
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
-			<BrowserRouter basename='/stake-holder-register'>
+			<BrowserRouter>
 				<App />
 			</BrowserRouter>
 		</ThemeProvider>
