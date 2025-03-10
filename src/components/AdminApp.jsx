@@ -54,7 +54,7 @@ const CustomAppBar = () => {
 	}
 
 	return (
-		<AppBar color='primary'>
+		<AppBar color='primary' sx={{ marginBottom: 2 }}>
 			<Box sx={{ flex: '1' }} />
 			Stakeholder Register Admin
 			<Box sx={{ flex: '1' }} />
