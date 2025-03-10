@@ -65,7 +65,7 @@ function ForgotPassword() {
 							const email = event.target.email.value
 							handleRecovery(
 								email,
-								'https://leightongrant.github.io/stake-holder-register/recovery'
+								'https://stakeholder-register.netlify.app/recovery'
 							)
 						},
 						sx: { backgroundImage: 'none' },
