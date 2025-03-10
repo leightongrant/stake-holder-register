@@ -148,7 +148,7 @@ const Home = () => {
 	}
 
 	return (
-		<Container maxWidth='xl'>
+		<Container maxWidth={'xl'}>
 			<Typography variant='h1' py={5}>
 				Stakeholder Register
 			</Typography>
