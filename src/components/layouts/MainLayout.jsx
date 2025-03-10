@@ -8,7 +8,7 @@ const MainLayout = () => {
 	const MainContainer = styled(Stack)(({ theme }) => ({
 		display: 'grid',
 		gridTemplateRows: 'auto 1fr auto',
-		gridTemplateColumns: '1fr',
+		gridTemplateColumns: '100%',
 		minHeight: '100dvh',
 		backgroundPosition: 'center',
 		backgroundSize: 'cover',
